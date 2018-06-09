@@ -48,20 +48,20 @@ from RepositoryBootstrap.SetupAndActivate.Configuration import *            # <U
 del sys.path[0]
 
 # ----------------------------------------------------------------------
-# There are two types of repositories: Standard and Tool. Only one standard
+# There are two types of repositories: Standard and Mixin. Only one standard
 # repository may be activated within an environment at a time while any number
-# of tool repositories can be activated within a standard repository environment.
+# of mixin repositories can be activated within a standard repository environment.
 # Standard repositories may be dependent on other repositories (thereby inheriting
 # their functionality), support multiple configurations, and specify version 
 # information for tools and libraries in themselves or its dependencies.
 #
-# Tool repositories are designed to augment other repositories. They cannot
+# Mixin repositories are designed to augment other repositories. They cannot
 # have configurations or dependencies and may not be activated on their own. 
 # 
 # These difference are summarized in this table: 
 # 
-#                                                       Standard  Tool
-#                                                       --------  ----
+#                                                       Standard  Mixin
+#                                                       --------  -----
 #      Can be activated in isolation                       X
 #      Supports configurations                             X
 #      Supports VersionSpecs                               X
@@ -73,14 +73,14 @@ del sys.path[0]
 # across a number of different repositories, yet doesn't have functionality that 
 # is useful on its own; it provides functionality that augments other repositories. 
 # This functionality should be included within a repository that is classified 
-# as a tool repository.
+# as a mixin repository.
 #
-# To classify a repository as a Tool repository, decorate the GetDependencies method
-# with the ToolRepository decorator.
+# To classify a repository as a Mixin repository, decorate the GetDependencies method
+# with the MixinRepository decorator.
 #
 
 
-# @ToolRepository # <-- Uncomment this line to classify this repository as a tool repository
+# @MixinRepository # <-- Uncomment this line to classify this repository as a mixin repository
 def GetDependencies():
     """
     Returns information about the dependencies required by this repository.

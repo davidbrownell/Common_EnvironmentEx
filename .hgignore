@@ -6,6 +6,7 @@ __pycache__
 
 Generated/*
 Activate.cmd
+Activate.ps1
 Activate.sh
 
 .coverage
