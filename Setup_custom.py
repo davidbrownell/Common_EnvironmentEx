@@ -89,14 +89,24 @@ def GetDependencies():
     (aka is configurable) or a single Configuration if not.
     """
 
-    # To support a single (unnamed) configuration...
-    return Configuration( "Standard",
-                          [ Dependency( "0EAA1DCF22804F90AD9F5A3B85A5D706",  # Id for Common_Environment; found in <Common_Environment>/__RepositoryId__
-                                        "Common_Environment",                # Name used if Common_Environment cannot be found during setup
-                                        "python36",                          # Configuration value used when activating Common_Environment
-                                      ),
-                          ],
-                        )
+    configurations = OrderedDict()
+
+    configurations["python36"] = Configuration( "Python v3.6.5",
+                                                [ Dependency( "0EAA1DCF22804F90AD9F5A3B85A5D706",
+                                                              "Common_Environment",
+                                                              "python36",
+                                                            ),
+                                                ],
+                                              )
+
+    configurations["python27"] = Configuration( "Python v2.7.14",
+                                                [ Dependency( "0EAA1DCF22804F90AD9F5A3B85A5D706",
+                                                              "Common_Environment",
+                                                              "python27",
+                                                            ),
+                                                ],
+                                              )
+    return configurations
 
 # ----------------------------------------------------------------------
 def GetCustomActions(debug, verbose, explicit_configurations):

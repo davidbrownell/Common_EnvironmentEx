@@ -32,7 +32,6 @@ del sys.path[0]
 
 # ----------------------------------------------------------------------
 def GetCustomActions( output_stream,
-                      shell,
                       configuration,
                       version_specs,
                       generated_dir,
@@ -53,7 +52,7 @@ def GetCustomActions( output_stream,
     return []
 
 # ----------------------------------------------------------------------
-def GetCustomScriptExtractors(shell):
+def GetCustomScriptExtractors():
     """
     Returns information that can be used to enumerate, extract, and generate documentation
     for scripts stored in the Scripts directory in this repository and all repositories
