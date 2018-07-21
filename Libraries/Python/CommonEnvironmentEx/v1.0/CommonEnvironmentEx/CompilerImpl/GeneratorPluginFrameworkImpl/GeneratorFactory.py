@@ -26,7 +26,7 @@ import six
 from CommonEnvironment.CallOnExit import CallOnExit
 from CommonEnvironment import CommandLine
 from CommonEnvironment import FileSystem
-from CommonEnvironment.Interface import staticderived
+from CommonEnvironment.Interface import staticderived, override, DerivedProperty
 from CommonEnvironment.StreamDecorator import StreamDecorator
 
 from CommonEnvironment.TypeInfo.FundamentalTypes.FilenameTypeInfo import FilenameTypeInfo
@@ -169,9 +169,9 @@ def CodeGeneratorFactory( plugin_map,
         # |  Public Properties
         # |  
         # ----------------------------------------------------------------------
-        Name                                = name
-        Description                         = description
-        InputTypeInfo                       = FilenameTypeInfo(validation_expression=filename_validation_expression)
+        Name                                = DerivedProperty(name)
+        Description                         = DerivedProperty(description)
+        InputTypeInfo                       = DerivedProperty(FilenameTypeInfo(validation_expression=filename_validation_expression))
 
         OriginalModuleFilename              = calling_mod_filename
         RequiresOutputName                  = requires_output_name
@@ -182,6 +182,7 @@ def CodeGeneratorFactory( plugin_map,
         # |  
         # ----------------------------------------------------------------------
         @staticmethod
+        @override
         def IsSupportedContent(filename):
             return is_supported_content_func is None or is_supported_content_func(filename)
 
@@ -191,6 +192,7 @@ def CodeGeneratorFactory( plugin_map,
         # |  
         # ----------------------------------------------------------------------
         @classmethod
+        @override
         def _GetOptionalMetadata(cls):
             return get_optional_metadata_func() + \
                    [ ( "plugin_settings", {} ),
@@ -199,6 +201,7 @@ def CodeGeneratorFactory( plugin_map,
 
         # ----------------------------------------------------------------------
         @classmethod
+        @override
         def _GetRequiredMetadataNames(cls):
             names = [ "plugin_name",
                     ]
@@ -213,6 +216,7 @@ def CodeGeneratorFactory( plugin_map,
 
         # ----------------------------------------------------------------------
         @classmethod
+        @override
         def _CreateContext(cls, metadata):
             if metadata["plugin_name"] not in plugin_map:
                 raise CommandLine.UsageException("'{}' is not a valid plugin".format(metadata["plugin_name"]))
@@ -256,6 +260,7 @@ def CodeGeneratorFactory( plugin_map,
 
         # ----------------------------------------------------------------------
         @classmethod
+        @override
         def _InvokeImpl( cls,
                          invoke_reason,
                          context,
@@ -274,6 +279,7 @@ def CodeGeneratorFactory( plugin_map,
 
         # ----------------------------------------------------------------------
         @classmethod
+        @override
         def _GetAdditionalGeneratorItems(cls, context):
             # ----------------------------------------------------------------------
             def ProcessorGeneratorItem(item):
