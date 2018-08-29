@@ -95,7 +95,7 @@ def GetDependencies():
                                                 [ Dependency( "0EAA1DCF22804F90AD9F5A3B85A5D706",
                                                               "Common_Environment",
                                                               "python36",
-                                                              lambda scm_or_none: "ssh://{mercurial_ssh_config_name}/d:/Mercurial/Code/v3/Common/Common_EnvironmentEx" if scm_or_none and scm_or_none.Name == "Mercurial" else "https://github.com/davidbrownell/Common_EnvironmentEx.git",
+                                                              lambda scm_or_none: "https://github.com/davidbrownell/Common_Environment-v3.git" if scm_or_none is None or scm_or_none.Name != "Mercurial" else "ssh://{mercurial_ssh_config_name}/d:/Mercurial/Code/v3/Common/Common_Environment",
                                                             ),
                                                 ],
                                               )
@@ -104,7 +104,7 @@ def GetDependencies():
                                                 [ Dependency( "0EAA1DCF22804F90AD9F5A3B85A5D706",
                                                               "Common_Environment",
                                                               "python27",
-                                                              lambda scm_or_none: "ssh://{mercurial_ssh_config_name}/d:/Mercurial/Code/v3/Common/Common_EnvironmentEx" if scm_or_none and scm_or_none.Name == "Mercurial" else "https://github.com/davidbrownell/Common_EnvironmentEx.git",
+                                                              lambda scm_or_none: "https://github.com/davidbrownell/Common_Environment-v3.git" if scm_or_none is None or scm_or_none.Name != "Mercurial" else "ssh://{mercurial_ssh_config_name}/d:/Mercurial/Code/v3/Common/Common_Environment",
                                                             ),
                                                 ],
                                               )
