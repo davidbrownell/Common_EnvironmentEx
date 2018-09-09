@@ -24,7 +24,7 @@ set +v                                      # Disable output
 # ----------------------------------------------------------------------
 # Note that sudo is necessary because the process will create symbolic links
 
-if [[ "$DEVELOPMENT_ENVIRONMENT_FUNDAMENTAL" = "" ]]
+if [[ "${DEVELOPMENT_ENVIRONMENT_FUNDAMENTAL}" = "" ]]
 then
     echo 
     echo "ERROR: Please run Activate.sh within a repository before running this script. It may be necessary to Setup and Activate the Common_Environment repository before setting up this one."
