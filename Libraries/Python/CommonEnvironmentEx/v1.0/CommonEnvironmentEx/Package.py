@@ -29,6 +29,7 @@ import six
 from contextlib import contextmanager
 
 from CommonEnvironment.CallOnExit import CallOnExit
+from CommonEnvironment.Shell.All import CurrentShell
 
 # ----------------------------------------------------------------------
 _script_fullpath = os.path.abspath(__file__) if "python" in sys.executable.lower() else sys.executable
@@ -56,7 +57,12 @@ def InitRelativeImports():
         # Continue traversing parent dirs as long as there is an __init__.py file.
         name_parts = []
 
-        directory = os.path.dirname(os.path.realpath(mod.__file__))
+        filename = os.path.realpath(mod.__file__)
+        if CurrentShell.IsSymLink(filename):
+            filename = CurrentShell.ResolveSymLink(filename)
+
+        directory = os.path.dirname(filename)
+        
         while os.path.isfile(os.path.join(directory, "__init__.py")):
             directory, name = os.path.split(directory)
             name_parts.append(name)
