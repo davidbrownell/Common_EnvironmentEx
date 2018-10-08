@@ -27,7 +27,7 @@ from CommonEnvironment.Constraints import Constraints
 from CommonEnvironment.TypeInfo.FundamentalTypes.All import *
 
 # ----------------------------------------------------------------------
-_script_fullpath = os.path.abspath(__file__) if "python" in sys.executable.lower() else sys.executable
+_script_fullpath = CommonEnvironment.ThisFullpath()
 _script_dir, _script_name = os.path.split(_script_fullpath)
 # ----------------------------------------------------------------------
 
