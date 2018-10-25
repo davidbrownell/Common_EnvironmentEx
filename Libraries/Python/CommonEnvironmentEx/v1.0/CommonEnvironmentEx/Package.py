@@ -30,6 +30,7 @@ from contextlib import contextmanager
 
 import CommonEnvironment
 from CommonEnvironment.CallOnExit import CallOnExit
+from CommonEnvironment import FileSystem
 from CommonEnvironment.Shell.All import CurrentShell
 
 # ----------------------------------------------------------------------
@@ -62,8 +63,11 @@ def InitRelativeImports():
         if CurrentShell.IsSymLink(filename):
             filename = CurrentShell.ResolveSymLink(filename)
 
-        directory = os.path.dirname(filename)
+        filename = FileSystem.Normalize(filename)
         
+        directory = os.path.dirname(filename)
+        name = os.path.splitext(os.path.basename(filename))[0]
+
         while os.path.isfile(os.path.join(directory, "__init__.py")):
             directory, name = os.path.split(directory)
             name_parts.append(name)
@@ -88,19 +92,19 @@ def InitRelativeImports():
 
         for index, name_part in enumerate(name_parts):
             fully_qualified_name = '.'.join(name_parts[:index + 1])
-
+        
             if fully_qualified_name not in sys.modules:
                 # When we load this module, it will be loaded under 'name_part'.
                 # Preserve the original module (if it exists).
                 temporary_modules[name_part] = sys.modules.pop(name_part, None)
-                
+                        
                 sys.path.insert(0, directory)
                 with CallOnExit(lambda: sys.path.pop(0)):
                     # This will add the module name to sys.modules
                     __import__(name_part)
-
+        
                 sys.modules[fully_qualified_name] = sys.modules[name_part]
-                
+        
             directory = os.path.join(directory, name_part)
 
         return fully_qualified_name
@@ -122,8 +126,6 @@ def InitRelativeImports():
     # ----------------------------------------------------------------------
 
     frame.f_locals["__package__"] = CreatePackageName()
-
+    
     with CallOnExit(Restore):
         yield
-
-
