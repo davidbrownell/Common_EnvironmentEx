@@ -297,7 +297,7 @@ def CodeGeneratorFactory( plugin_map,
                      cls.OriginalModuleFilename,
                      plugin,
                    ] + \
-                   [ ProcessGeneratorItem(item) for item in plugin.GetAdditionalGeneratorItems(context) ] + \
+                   list(plugin.GetAdditionalGeneratorItems(context)) + \
                    super(CodeGenerator, cls)._GetAdditionalGeneratorItems(context)
 
     # ----------------------------------------------------------------------
