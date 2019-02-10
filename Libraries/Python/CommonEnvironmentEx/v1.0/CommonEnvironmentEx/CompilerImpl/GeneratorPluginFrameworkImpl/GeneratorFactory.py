@@ -238,7 +238,7 @@ def CodeGeneratorFactory( plugin_map,
 
                 if type(v) != desired_type:
                     assert isinstance(v, (str, UnicodeDecodeError)), (v, type(v))
-                    plugin_settings[k] = StringSerialization(CreateFromPythonType(desired_type), v)
+                    plugin_settings[k] = StringSerialization.DeserializeItem(CreateFromPythonType(desired_type), v)
 
             for k, v in six.iteritems(custom_settings):
                 if k not in plugin_settings:
