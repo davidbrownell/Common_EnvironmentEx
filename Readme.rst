@@ -10,10 +10,10 @@ Contents
 #. `Quick Start`_
 #. License_
 #. `Supported Platforms`_
-#. Definitions_
 #. Functionality_
 #. `Docker Images`_
 #. Dependencies_
+#. `Related Repositories`_
 #. Support_
 
 Quick Start
@@ -37,9 +37,9 @@ Activate
   Activate prepares the current environment for development activities and must be run at least once in each terminal window.
   
   ====================================  =====================================================
-  Linux                                 ``Activate.sh <TODO: Update configurations>``
-  Windows                               ``Activate.cmd <TODO: Update configurations>``
-  Windows (PowerShell)                  ``Activate.ps1 <TODO: Update configurations>``
+  Linux                                 ``Activate.sh <python36|python27>``
+  Windows                               ``Activate.cmd <python36|python27>``
+  Windows (PowerShell)                  ``Activate.ps1 <python36|python27>``
   ====================================  =====================================================
   
 License
@@ -57,25 +57,37 @@ This software has been verified on the following platforms.
 ========================  ======================  =========================================
 Platform                  Scripting Environment   Version
 ========================  ======================  =========================================
-Windows                   Cmd.exe                 Windows 10 April 2018 Update
-Windows                   PowerShell              Windows 10 April 2018 Update
-Linux                     Bash                    Ubuntu 18.04, 16.04
+Windows                   Cmd.exe                 Windows 10:
+
+                                                  - October 2018 Update
+                                                  - April 2018 Update
+
+Windows                   PowerShell              Windows 10:
+
+                                                  - October 2018 Update
+                                                  - April 2018 Update
+
+Linux                     Bash                    Ubuntu:
+
+                                                  - 18.04
+                                                  - 16.04
 ========================  ======================  =========================================
 
-Definitions
-===========
-  
 Functionality
 =============
-  
+
+`Backup <src/Backup>`_
+  Support for mirroring and offsite backups and restoration.
+
 Docker Images
 =============
 Docker images of `Common_EnvironmentEx` are generated periodically.
 
-==========================  ==========================================
-Coming Soon                 An environment that is setup but not activated (useful as a base image).
-Coming Soon                 An environment that is activated.
-==========================  ==========================================
+================================================  ==========================================
+dbrownell/common_environmentex:python36           An environment that is activated_ with python36.
+dbrownell/common_environmentex:python27           An environment that is activated_ with python27.
+dbrownell/common_environmentex:base               An environment that is setup_ but not activated_ (useful as a base image for other Common_Environment-based images).
+================================================  ==========================================
 
 Dependencies
 ============
@@ -87,6 +99,14 @@ Repo Name                       Description
 `Common_Environment`            Common development activities
 ==============================  =================================
 
+Related Repositories
+====================
+
+=======================================================================================  ==========================================
+`Common_Environment_v3 <https://github.com/davidbrownell/Common_Environment_v3>`_        Foundational repository that implements functionality common to all development environments. 
+=======================================================================================  ==========================================
+
+
 Support
 =======
-For question or issues, please visit <TODO: Your url>.
+For question or issues, please visit https://github.com/davidbrownell/Common_EnvironmentEx/issues.
