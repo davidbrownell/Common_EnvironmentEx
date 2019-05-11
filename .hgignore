@@ -5,9 +5,13 @@ __pycache__
 *.pyo
 
 Generated/*
+
 Activate.cmd
+Activate.*.cmd
 Activate.ps1
+Activate.*.ps1
 Activate.sh
+Activate.*.sh
 
 .coverage
 coverage.xml
