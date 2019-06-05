@@ -118,6 +118,7 @@ class PluginBase(Interface):
                              prefix='',
                              line_break="--------------------------------------------------------------------------------",
                              filename_parts=3,          # Number of filename parts to display
+                             filename_prefix=None,
                              callstack_offset=0,
                            ):
         """Returns a string that should be included at the top of output files generated"""
@@ -143,6 +144,6 @@ class PluginBase(Interface):
             {prefix}{line_break}
             """).format( prefix=prefix,
                          line_break=line_break,
-                         by=filename,
+                         by="{}{}".format(filename_prefix or '', filename),
                          now=str(datetime.datetime.now()),
                        )
