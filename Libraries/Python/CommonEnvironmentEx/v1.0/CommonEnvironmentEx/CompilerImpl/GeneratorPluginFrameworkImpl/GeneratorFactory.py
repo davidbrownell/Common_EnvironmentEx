@@ -1,16 +1,16 @@
 # ----------------------------------------------------------------------
-# |  
+# |
 # |  GeneratorFactory.py
-# |  
+# |
 # |  David Brownell <db@DavidBrownell.com>
 # |      2018-07-06 13:23:00
-# |  
+# |
 # ----------------------------------------------------------------------
-# |  
+# |
 # |  Copyright David Brownell 2018-19.
 # |  Distributed under the Boost Software License, Version 1.0.
 # |  (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-# |  
+# |
 # ----------------------------------------------------------------------
 """Functional that helps when writing generators that support plugin frameworks"""
 
@@ -154,7 +154,7 @@ def CodeGeneratorFactory( plugin_map,
     assert get_optional_metadata_func
     assert create_context_func
     assert invoke_func
-    
+
     calling_frame = inspect.stack()[1]
     calling_mod_filename = os.path.realpath(inspect.getmodule(calling_frame[0]).__file__)
 
@@ -166,9 +166,9 @@ def CodeGeneratorFactory( plugin_map,
                          CodeGeneratorMod.CodeGenerator,
                        ):
         # ----------------------------------------------------------------------
-        # |  
+        # |
         # |  Public Properties
-        # |  
+        # |
         # ----------------------------------------------------------------------
         Name                                = DerivedProperty(name)
         Description                         = DerivedProperty(description)
@@ -178,9 +178,9 @@ def CodeGeneratorFactory( plugin_map,
         RequiresOutputName                  = requires_output_name
 
         # ----------------------------------------------------------------------
-        # |  
+        # |
         # |  Public Methods
-        # |  
+        # |
         # ----------------------------------------------------------------------
         @staticmethod
         @override
@@ -188,9 +188,9 @@ def CodeGeneratorFactory( plugin_map,
             return is_supported_content_func is None or is_supported_content_func(filename)
 
         # ----------------------------------------------------------------------
-        # |  
+        # |
         # |  Protected Methods
-        # |  
+        # |
         # ----------------------------------------------------------------------
         @classmethod
         @override
@@ -208,7 +208,7 @@ def CodeGeneratorFactory( plugin_map,
                     ]
 
             if cls.RequiresOutputName:
-                names += [ "output_name", 
+                names += [ "output_name",
                          ]
 
             names += super(CodeGenerator, cls)._GetRequiredMetadataNames()
@@ -218,7 +218,7 @@ def CodeGeneratorFactory( plugin_map,
         # ----------------------------------------------------------------------
         @classmethod
         @override
-        def _CreateContext(cls, metadata):
+        def _CreateContext(cls, metadata, status_stream):
             if metadata["plugin_name"] not in plugin_map:
                 raise CommandLine.UsageException("'{}' is not a valid plugin".format(metadata["plugin_name"]))
 
@@ -257,7 +257,7 @@ def CodeGeneratorFactory( plugin_map,
             if postprocess_context_func:
                 context = postprocess_context_func(context, plugin)
 
-            return super(CodeGenerator, cls)._CreateContext(context)
+            return super(CodeGenerator, cls)._CreateContext(context, status_stream)
 
         # ----------------------------------------------------------------------
         @classmethod
@@ -265,8 +265,8 @@ def CodeGeneratorFactory( plugin_map,
         def _InvokeImpl( cls,
                          invoke_reason,
                          context,
-                         status_stream, 
-                         verbose_stream, 
+                         status_stream,
+                         verbose_stream,
                          verbose,
                        ):
             return invoke_func( cls,
