@@ -53,7 +53,7 @@ class CodeGenerator(
 ):
     # ----------------------------------------------------------------------
     # |  Types
-    ContextCode                             = namedtuple("ContextCode", ["filename", "var_name"]) 
+    ContextCode                             = namedtuple("ContextCode", ["filename", "var_name"])
 
     # ----------------------------------------------------------------------
     # |  Properties
@@ -88,12 +88,12 @@ class CodeGenerator(
     # ----------------------------------------------------------------------
     @classmethod
     @Interface.override
-    def _CreateContext(cls, metadata):
+    def _CreateContext(cls, metadata, status_stream):
         jinja2_context = {}
 
         # Load the custom context defined in code
         for context_code in metadata["jinja2_context_code"]:
-            dirname, basename = os.path.split(contet_code)
+            dirname, basename = os.path.split(context_code)
             basename = os.path.splitext(basename)[0]
 
             sys.path.insert(0, dirname)
@@ -124,7 +124,7 @@ class CodeGenerator(
         # during comparison to determine if an input file has changed. It appears
         # that this value isn't used, but it is actually used when comparing the
         # context of two different invocations.
-        
+
         # ----------------------------------------------------------------------
         def CalculateHash(input_filename):
             with open(input_filename, "rb") as f:
@@ -150,7 +150,7 @@ class CodeGenerator(
 
             # ----------------------------------------------------------------------
             def GetBaseDir(input_filename):
-                return FileSystem.TrimPath(input_Filename, common_prefix)
+                return FileSystem.TrimPath(input_filename, common_prefix)
 
             # ----------------------------------------------------------------------
 
@@ -167,7 +167,7 @@ class CodeGenerator(
 
         metadata["output_filenames"] = output_filenames
 
-        return super(CodeGenerator, cls)._CreateContext(metadata)
+        return super(CodeGenerator, cls)._CreateContext(metadata, status_stream)
 
     # ----------------------------------------------------------------------
     @classmethod
@@ -175,7 +175,7 @@ class CodeGenerator(
     def _InvokeImpl(cls, invoke_reason, context, status_stream, verbose_stream, verbose):
         # ----------------------------------------------------------------------
         class RelativeFileSystemLoader(FileSystemLoader):
-            
+
             # ----------------------------------------------------------------------
             def __init__(
                 self,
@@ -250,7 +250,7 @@ class CodeGenerator(
 
                             with open(input_filename) as f:
                                 content = env.parse(f.read())
-                                
+
                             this_dm.stream.write("Variables:\n{}\n".format("\n".join(["    - {}".format(var) for var in meta.find_undeclared_variables(content)])))
 
                             continue
@@ -273,7 +273,7 @@ class CodeGenerator(
                         # Technically speaking, this isn't required as Jinja's import/include/extend functionality
                         # superseeds this functionality. However, it remains in the name of backwards compatibility.
                         env.filters["read_file"] = ReadFileFilter
-                        
+
                         with open(input_filename) as f:
                             template = env.from_string(f.read())
 
