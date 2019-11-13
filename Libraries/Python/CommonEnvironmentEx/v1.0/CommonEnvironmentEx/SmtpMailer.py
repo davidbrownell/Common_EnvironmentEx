@@ -1,19 +1,20 @@
 # ----------------------------------------------------------------------
-# |  
+# |
 # |  SmtpMailer.py
-# |  
+# |
 # |  David Brownell <db@DavidBrownell.com>
 # |      2018-06-30 22:32:10
-# |  
+# |
 # ----------------------------------------------------------------------
-# |  
+# |
 # |  Copyright David Brownell 2018-19.
 # |  Distributed under the Boost Software License, Version 1.0.
 # |  (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-# |  
+# |
 # ----------------------------------------------------------------------
 """Contains the SmtpMailer object"""
 
+import io
 import mimetypes
 import os
 import smtplib
@@ -152,7 +153,13 @@ class SmtpMailer(object):
             maintype, subtype = ctype.split('/', 1)
 
             if maintype == "text":
-                attachment = MIMEText(open(attachment_filename).read(), _subtype=subtype)
+                attachment = MIMEText(
+                    io.open(
+                        attachment_filename,
+                        encoding="utf-8",
+                    ).read(),
+                    _subtype=subtype,
+                )
             elif maintype == "image":
                 attachment = MIMEImage(open(attachment_filename, 'rb').read(), _subtype=subtype)
             elif maintype == "audio":
