@@ -91,6 +91,10 @@ class SmtpMailer(object):
         self.Ssl                            = ssl
 
     # ----------------------------------------------------------------------
+    def __repr__(self):
+        return CommonEnvironment.ObjectReprImpl(self)
+
+    # ----------------------------------------------------------------------
     def Save(self, profile_name):
         """Saves a profile"""
 
