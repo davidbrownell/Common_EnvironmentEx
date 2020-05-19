@@ -1,16 +1,16 @@
 # ----------------------------------------------------------------------
-# |  
+# |
 # |  CreateSmtpMailer.py
-# |  
+# |
 # |  David Brownell <db@DavidBrownell.com>
 # |      2018-06-30 22:52:11
-# |  
+# |
 # ----------------------------------------------------------------------
-# |  
+# |
 # |  Copyright David Brownell 2018-20.
 # |  Distributed under the Boost Software License, Version 1.0.
 # |  (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-# |  
+# |
 # ----------------------------------------------------------------------
 """Creates, Lists, and Verifies SmtpMailer profiles"""
 
@@ -81,6 +81,18 @@ def List( output_stream=sys.stdout,
         {}
         """).format( '\n'.join([ "    - {}".format(profile) for profile in SmtpMailer.GetProfiles() ]),
                    ))
+
+# ----------------------------------------------------------------------
+@CommandLine.EntryPoint
+@CommandLine.Constraints( profile_name=CommandLine.StringTypeInfo(),
+                          output_stream=None,
+                        )
+def Display( profile_name,
+             output_stream=sys.stdout,
+           ):
+    mailer = SmtpMailer.Load(profile_name)
+
+    output_stream.write(str(mailer))
 
 # ----------------------------------------------------------------------
 @CommandLine.EntryPoint
