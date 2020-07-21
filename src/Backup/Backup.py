@@ -784,7 +784,7 @@ def CommitOffsite(
     ),
     dir_substitution=CommandLine.DictTypeInfo(
         require_exact_match=False,
-        arity="?",
+        arity="*",
     ),
     output_stream=None,
 )
