@@ -313,7 +313,7 @@ class CodeGenerator(
     ),
     context=CommandLine.DictTypeInfo(
         require_exact_match=False,
-        arity="?",
+        arity="*",
     ),
     context_code=CommandLine.StringTypeInfo(
         validation_expression="^.+:.+$",
