@@ -28,6 +28,7 @@ from CommonEnvironment.CallOnExit import CallOnExit
 from CommonEnvironment import CommandLine
 from CommonEnvironment import FileSystem
 from CommonEnvironment.Interface import staticderived, override, DerivedProperty
+from CommonEnvironment.Shell.All import CurrentShell
 from CommonEnvironment.StreamDecorator import StreamDecorator
 
 from CommonEnvironment.TypeInfo.FundamentalTypes.FilenameTypeInfo import FilenameTypeInfo
@@ -157,6 +158,9 @@ def CodeGeneratorFactory( plugin_map,
 
     calling_frame = inspect.stack()[1]
     calling_mod_filename = os.path.realpath(inspect.getmodule(calling_frame[0]).__file__)
+
+    if CurrentShell.IsSymLink(calling_mod_filename):
+        calling_mod_filename = CurrentShell.ResolveSymLink(calling_mod_filename)
 
     # ----------------------------------------------------------------------
     @staticderived
