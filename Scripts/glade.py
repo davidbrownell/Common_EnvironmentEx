@@ -38,7 +38,7 @@ _script_dir, _script_name                   = os.path.split(_script_fullpath)
     output_stream=None,
 )
 def EntryPoint(
-    arg,
+    arg=None,
     output_stream=sys.stdout,
 ):
     args = arg; del arg
