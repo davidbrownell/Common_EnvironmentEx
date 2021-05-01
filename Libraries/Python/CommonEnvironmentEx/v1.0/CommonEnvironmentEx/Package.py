@@ -22,7 +22,6 @@ extreme manipulation of the packaging internals.
 import inspect
 import os
 import sys
-import traceback
 
 import six
 
