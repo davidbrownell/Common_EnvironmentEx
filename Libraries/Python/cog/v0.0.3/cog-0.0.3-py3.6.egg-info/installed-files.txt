@@ -1,0 +1,6 @@
+..\cog\__init__.py
+..\cog\__pycache__\__init__.cpython-36.pyc
+PKG-INFO
+SOURCES.txt
+dependency_links.txt
+top_level.txt
