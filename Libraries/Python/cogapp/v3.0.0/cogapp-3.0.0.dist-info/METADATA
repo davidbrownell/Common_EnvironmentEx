@@ -1,0 +1,70 @@
+Metadata-Version: 2.1
+Name: cogapp
+Version: 3.0.0
+Summary: Cog: A content generator for executing Python snippets in source files.
+Home-page: http://nedbatchelder.com/code/cog
+Author: Ned Batchelder
+Author-email: ned@nedbatchelder.com
+License: MIT
+Project-URL: Documentation, http://nedbatchelder.com/code/cog
+Project-URL: Code, http://github.com/nedbat/cog
+Project-URL: Issues, https://github.com/nedbat/cog/issues
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Topic :: Software Development :: Code Generators
+Requires-Python: >=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4
+Description-Content-Type: text/x-rst
+
+===
+Cog
+===
+
+Cog content generation tool.
+
+|  |license| |versions| |status|
+|  |ci-status| |win-ci-status|
+|  |kit| |format|
+
+See http://nedbatchelder.com/code/cog for details.
+
+Code repository and issue tracker are at
+`GitHub <https://github.com/nedbat/cog>`_.
+
+To run the tests::
+
+    $ pip install -r requirements.pip
+    $ tox
+
+
+.. |ci-status| image:: https://travis-ci.com/nedbat/cog.svg?branch=master
+    :target: https://travis-ci.com/nedbat/cog
+    :alt: Build status
+.. |win-ci-status| image:: https://ci.appveyor.com/api/projects/status/hqq7x2vawnci7v7d/branch/master?svg=true
+    :target: https://ci.appveyor.com/project/nedbat/cog
+    :alt: Windows build status
+.. |kit| image:: https://badge.fury.io/py/cogapp.svg
+    :target: https://pypi.org/project/cogapp/
+    :alt: PyPI status
+.. |format| image:: https://img.shields.io/pypi/format/cogapp.svg
+    :target: https://pypi.org/project/cogapp/
+    :alt: Kit format
+.. |license| image:: https://img.shields.io/pypi/l/cogapp.svg
+    :target: https://pypi.org/project/cogapp/
+    :alt: License
+.. |versions| image:: https://img.shields.io/pypi/pyversions/cogapp.svg
+    :target: https://pypi.org/project/cogapp/
+    :alt: Python versions supported
+.. |status| image:: https://img.shields.io/pypi/status/cogapp.svg
+    :target: https://pypi.org/project/cogapp/
+    :alt: Package stability
+
+
