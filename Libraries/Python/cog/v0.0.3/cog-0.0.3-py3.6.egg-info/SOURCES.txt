@@ -1,0 +1,8 @@
+README.md
+setup.cfg
+setup.py
+cog/__init__.py
+cog.egg-info/PKG-INFO
+cog.egg-info/SOURCES.txt
+cog.egg-info/dependency_links.txt
+cog.egg-info/top_level.txt
