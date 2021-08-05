@@ -120,7 +120,7 @@ def Execute():
 
         From the command line:
 
-            cog -c -r "<launch.json filename>"
+            cog -r "<launch.json filename>"
 
     """
 
@@ -202,7 +202,7 @@ def Execute():
 
             // To regenerate this content:
             //
-            //    cog -r -c "{}"
+            //    cog -r "{}"
 
             // ----------------------------------------------------------------------
             // ----------------------------------------------------------------------
