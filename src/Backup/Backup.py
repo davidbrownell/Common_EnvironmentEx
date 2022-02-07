@@ -971,7 +971,7 @@ def OffsiteRestore(
                                         this_dir_dm.stream.write(
                                             "ERROR: Contents for the file '{}' were not found at '{}' (Index: {}).\n".format(
                                                 filename,
-                                                hasehd_filename,
+                                                hashed_filename,
                                                 file_info_index,
                                             ),
                                         )
@@ -997,8 +997,9 @@ def OffsiteRestore(
                     for k, v in six.iteritems(dir_substitutions):
                         new_key = key.replace(k, v)
 
-                        file_data[new_key] = file_data[key]
-                        del file_data[key]
+                        if new_key != key:
+                            file_data[new_key] = file_data[key]
+                            del file_data[key]
 
                 keys = sorted(six.iterkeys(file_data))
 
