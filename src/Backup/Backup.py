@@ -289,7 +289,7 @@ def Mirror(
         return dm.result
 
 # ----------------------------------------------------------------------
-@CommandLine.EntryPoint(
+@CommandLine.EntryPoint(                    # type: ignore
     backup_name=CommandLine.EntryPoint.Parameter(
         "Name used to uniquely identify the backup",
     ),
@@ -334,8 +334,11 @@ def Mirror(
     no_status=CommandLine.EntryPoint.Parameter(
         "Do not display file-specific status when performing long-running operations",
     ),
+    no_validate=CommandLine.EntryPoint.Parameter(
+        "Do not validate the backup",
+    ),
 )
-@CommandLine.Constraints(
+@CommandLine.Constraints(                   # type: ignore
     backup_name=CommandLine.StringTypeInfo(),
     output_dir=CommandLine.DirectoryTypeInfo(
         ensure_exists=False,
@@ -385,6 +388,7 @@ def Offsite(
     traverse_exclude=None,
     display_only=False,
     no_status=False,
+    no_validate=False,
     working_dir=None,
     hash_block_size=None,
     output_stream=sys.stdout,
@@ -624,10 +628,11 @@ def Offsite(
                     FileSystem.RemoveTree(temp_dir)
                     os.makedirs(temp_dir)
 
-                    zip_dm.stream.write("Creating Instructions...")
-                    with zip_dm.stream.DoneManager():
-                        filenames_filename = CurrentShell.CreateTempFilename()
+                    filenames_filename = CurrentShell.CreateTempFilename()
+                    backup_filename = os.path.join(temp_dir, OFFSITE_BACKUP_FILENAME)
 
+                    zip_dm.stream.write("Creating Content...")
+                    with zip_dm.stream.DoneManager():
                         with open(filenames_filename, "w") as f:
                             f.write(
                                 "\n".join(
@@ -638,30 +643,44 @@ def Offsite(
                                 ),
                             )
 
-                        with CallOnExit(
-                            lambda: FileSystem.RemoveFile(filenames_filename),
-                        ):
-                            zip_dm.stream.write("Executing...")
-                            with zip_dm.stream.DoneManager(
-                                suffix="\n",
-                            ) as this_dm:
-                                command_line = '7za a -t7z "{output}" -mx{compression_level} -v{chunk_size}b -scsWIN -ssw{encryption_arg} -y "@{filenames_filename}"'.format(
-                                    output=os.path.join(
-                                        temp_dir,
-                                        OFFSITE_BACKUP_FILENAME,
-                                    ),
-                                    compression_level=compression_level,
-                                    chunk_size=250 * 1024 * 1024,           # MB
-                                    encryption_arg=encryption_arg,
-                                    filenames_filename=filenames_filename,
-                                )
+                    with CallOnExit(
+                        lambda: FileSystem.RemoveFile(filenames_filename),
+                    ):
+                        zip_dm.stream.write("Executing...")
+                        with zip_dm.stream.DoneManager(
+                            suffix="\n",
+                        ) as this_dm:
+                            command_line = '7za a -t7z "{backup_filename}" -mx{compression_level} -v{chunk_size}b -scsWIN -ssw{encryption_arg} -y "@{filenames_filename}"'.format(
+                                backup_filename=backup_filename,
+                                compression_level=compression_level,
+                                chunk_size=250 * 1024 * 1024,           # MB
+                                encryption_arg=encryption_arg,
+                                filenames_filename=filenames_filename,
+                            )
 
-                                this_dm.result = Process.Execute(
-                                    command_line,
-                                    this_dm.stream,
-                                )
-                                if this_dm.result != 0:
-                                    return this_dm.result
+                            this_dm.result = Process.Execute(
+                                command_line,
+                                this_dm.stream,
+                            )
+                            if this_dm.result != 0:
+                                return this_dm.result
+
+                    if not no_validate:
+                        zip_dm.stream.write("Validating...")
+                        with zip_dm.stream.DoneManager(
+                            suffix="\n",
+                        ) as this_dm:
+                            command_line = '7za t "{backup_filename}.001"{encryption_arg}'.format(
+                                backup_filename=backup_filename,
+                                encryption_arg=encryption_arg,
+                            )
+
+                            this_dm.result = Process.Execute(
+                                command_line,
+                                this_dm.stream,
+                            )
+                            if this_dm.result != 0:
+                                return this_dm.result
 
                     # Swap the output_dir and the temp_dir
                     zip_dm.stream.write("Updating Original Content...")
