@@ -65,7 +65,14 @@ _CONFIGURATIONS                             = OrderedDict(
 
                         "--capture=no", // Do not capture stderr/stdout
                         "-vv",
-                        // "-k", "test_name", // To run a specific test
+
+                        // To run a specific test. To run a test method within a class, use the
+                        // expression:
+                        //
+                        //      "<class_name> AND <test_name> [AND NOT <other_test_name>]"
+                        //
+
+                        // "-k", "test_name",
 
                         // Insert custom program args here
                     ],
