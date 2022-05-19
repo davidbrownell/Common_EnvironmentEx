@@ -22,3 +22,9 @@ Deactivate.*.sh
 
 .coverage
 coverage.xml
+
+.vscode
+.pytest_cache
+
+Libraries/Python/CommonEnvironmentEx/v1.0/CommonEnvironmentEx.egg-info/*
+Libraries/Python/CommonEnvironmentEx/v1.0/dist/*
